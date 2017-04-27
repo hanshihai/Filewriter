@@ -6,13 +6,22 @@ import java.util.Date;
 
 public class Execute {
 
-    public final static byte[] content = "abcdefghijklmnopqrstuvwxyz0123456789".getBytes();
+    public static byte[] content;
     public final static long idle = 1000 * 3;
     public final static long max_life_time = 1000 * 60 * 60 * 24;
     public final static int retry = 3;
 
     private final RandomAccessFile randomAccess;
     private final long totalLength;
+
+    static {
+        String src = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-\n";
+        StringBuffer buffer = new StringBuffer();
+        for(int i=0;i<1024 * 2; i++) {
+            buffer.append(src);
+        }
+        content = buffer.toString().getBytes();
+    }
 
     public Execute(File file, long length) throws IOException {
         this.randomAccess = new RandomAccessFile(file, "rw");
